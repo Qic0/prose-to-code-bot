@@ -48,7 +48,6 @@ const Zadachi = () => {
       const enrichedTasks = tasks?.map(task => {
         const taskWithOrder = task as any;
         const order = taskWithOrder.zakaz_id ? ordersMap.get(taskWithOrder.zakaz_id) : null;
-        
         return {
           ...task,
           responsible_user_name: task.responsible_user_id ? usersMap.get(task.responsible_user_id) : null,
@@ -95,15 +94,6 @@ const Zadachi = () => {
     },
     { key: 'status', header: 'Статус' },
     { key: 'priority', header: 'Приоритет' },
-    { 
-      key: 'is_overdue', 
-      header: 'Просрочена',
-      render: (value: boolean) => (
-        <Badge variant={value ? "destructive" : "default"}>
-          {value ? "Да" : "Нет"}
-        </Badge>
-      )
-    },
     { key: 'salary', header: 'Зарплата' },
     { key: 'remaining_time', header: 'Осталось времени' },
     { key: 'due_date', header: 'Срок' },

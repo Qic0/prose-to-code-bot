@@ -180,7 +180,6 @@ export type Database = {
           execution_time_seconds: number | null
           id_zadachi: number
           image_url: string | null
-          is_overdue: boolean | null
           priority: Database["public"]["Enums"]["task_priority"] | null
           responsible_user_id: string | null
           salary: number | null
@@ -199,7 +198,6 @@ export type Database = {
           execution_time_seconds?: number | null
           id_zadachi: number
           image_url?: string | null
-          is_overdue?: boolean | null
           priority?: Database["public"]["Enums"]["task_priority"] | null
           responsible_user_id?: string | null
           salary?: number | null
@@ -218,7 +216,6 @@ export type Database = {
           execution_time_seconds?: number | null
           id_zadachi?: number
           image_url?: string | null
-          is_overdue?: boolean | null
           priority?: Database["public"]["Enums"]["task_priority"] | null
           responsible_user_id?: string | null
           salary?: number | null
@@ -343,10 +340,6 @@ export type Database = {
       is_admin: {
         Args: Record<PropertyKey, never>
         Returns: boolean
-      }
-      moscow_now: {
-        Args: Record<PropertyKey, never>
-        Returns: string
       }
       set_user_offline: {
         Args: { user_uuid: string }
