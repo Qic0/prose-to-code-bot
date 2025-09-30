@@ -113,8 +113,12 @@ const formatRemainingTime = (value: any, row: any) => {
       timeStr = `${remainingSeconds}с`;
     }
     
+    // Проверяем, была ли задача просрочена
+    const wasOverdue = row.due_date && new Date(row.due_date) < new Date();
+    const colorClass = wasOverdue ? "text-destructive" : "text-green-600";
+    
     return (
-      <span className="text-green-600 font-medium">
+      <span className={`${colorClass} font-medium`}>
         Выполнено за {timeStr}
       </span>
     );
