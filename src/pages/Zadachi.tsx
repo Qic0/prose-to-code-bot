@@ -44,14 +44,21 @@ const Zadachi = () => {
       const usersMap = new Map(users?.map(user => [user.uuid_user, user.full_name]) || []);
       const ordersMap = new Map(orders?.map(order => [order.id_zakaza, order]) || []);
       
-      // Обогащаем задачи данными о пользователях
+      // Обогащаем задачи данными о пользователях и проверяем просрочку
       const enrichedTasks = tasks?.map(task => {
         const taskWithOrder = task as any;
         const order = taskWithOrder.zakaz_id ? ordersMap.get(taskWithOrder.zakaz_id) : null;
+        
+        // Вычисляем, просрочена ли задача
+        const isOverdue = task.due_date && 
+          new Date(task.due_date) < new Date() && 
+          task.status !== 'completed';
+        
         return {
           ...task,
           responsible_user_name: task.responsible_user_id ? usersMap.get(task.responsible_user_id) : null,
-          order_title: order ? `${order.title} (${order.client_name})` : null
+          order_title: order ? `${order.title} (${order.client_name})` : null,
+          is_overdue: isOverdue
         };
       }) || [];
       
@@ -94,6 +101,15 @@ const Zadachi = () => {
     },
     { key: 'status', header: 'Статус' },
     { key: 'priority', header: 'Приоритет' },
+    { 
+      key: 'is_overdue', 
+      header: 'Просрочена',
+      render: (value: boolean) => (
+        <Badge variant={value ? "destructive" : "default"}>
+          {value ? "Да" : "Нет"}
+        </Badge>
+      )
+    },
     { key: 'salary', header: 'Зарплата' },
     { key: 'remaining_time', header: 'Осталось времени' },
     { key: 'due_date', header: 'Срок' },
